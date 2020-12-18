@@ -1,4 +1,4 @@
-# TestArchiver
+# TestArchiver2
 
 This is fork from [salabs TestArchiver](https://github.com/salabs/TestArchiver), it contains enhancements
 for submitting changes from a json file. See `testarchiver2 --help` for more details.
