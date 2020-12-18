@@ -1,5 +1,8 @@
 # TestArchiver
 
+This is fork from [salabs TestArchiver](https://github.com/salabs/TestArchiver), it contains enhancements
+for submitting changes from a json file.
+
 TestArchiver is a tool for archiving your test results to a SQL database.
 
 And [Epimetheus](https://github.com/salabs/Epimetheus) is the tool for browsing the results you archived.

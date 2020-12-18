@@ -6,14 +6,14 @@ with open("README.md", "r") as fh:
     LONG_DESCRIPTION = fh.read()
 
 setuptools.setup(
-    name="testarchiver",
+    name="testarchiver2",
     version=dynamic_package_version(),
-    author="Tommi Oinonen",
-    author_email="salabs-mail@siili.com",
-    description="Tools for serialising test results to SQL database ",
+    author="Tatu Aalto",
+    author_email="aalto.tatu@gmail.com",
+    description="Tools for serialising test results to SQL database",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    url="https://github.com/salabs/TestArchiver",
+    url="https://github.com/aaltat/TestArchiver",
     license="Apache License 2.0",
     classifiers=[
         "Programming Language :: Python :: 3",
