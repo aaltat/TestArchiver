@@ -496,6 +496,8 @@ class Archiver:
         self.stack = []
         self.keyword_statistics = {}
         self.build_number_cache = build_number_cache or {}
+        self.execution_context = config.execution_context
+        self.changes = config.changes
 
         self.listeners = []
         if config.change_engine_url:
