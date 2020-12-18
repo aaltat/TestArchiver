@@ -23,7 +23,7 @@ setuptools.setup(
     keywords='robotframework test report history',
 
     packages=setuptools.find_packages(),
-    python_requires='>=3.0',
+    python_requires='>=3.5',
     install_requires=['psycopg2-binary>=2.8.5'],
     include_package_data=True,
     zip_safe=False,
@@ -31,8 +31,8 @@ setuptools.setup(
     scripts=['helpers/diff2change_context_list.py'],
     entry_points={
         'console_scripts': [
-            'testarchiver=test_archiver.output_parser:main',
-            'testarchive_schematool=test_archiver.database:main',
+            'testarchiver2=test_archiver.output_parser:main',
+            'testarchive2_schematool=test_archiver.database:main',
         ]
     },
 )
