@@ -5,9 +5,11 @@ from collections import defaultdict
 
 from . import version
 
+
 def read_config_file(file_name):
     with open(file_name, 'r') as config_file:
         return json.load(config_file)
+
 
 def parse_key_value_pairs(values):
     if isinstance(values, dict):
@@ -34,7 +36,7 @@ LOG_LEVEL_MAP["FAIL"] = 50
 LOG_LEVEL_CUT_OFF_OPTIONS = ('TRACE', 'DEBUG', 'INFO', 'WARN')
 
 
-class Config():
+class Config:
 
     def __init__(self, cli_args=None, file_config=None):
         self._cli_args = cli_args
@@ -42,7 +44,8 @@ class Config():
             self._file_config = read_config_file(file_config)
         else:
             self._file_config = file_config or {}
-
+        self._changes = 'changes'
+        self._default = 'default'
         self._resolve_options()
 
     def _resolve_options(self):
@@ -79,10 +82,10 @@ class Config():
 
         self.time_adjust_with_system_timezone = self.resolve_option('time_adjust_with_system_timezone',
                                                                     default=False, cast_as=bool)
-
+        self.execution_context = self.resolve_execution_context()
+        self.changes = self.resolve_changes()
 
     def resolve_option(self, name, default=None, cast_as=str):
-        value = None
         if self._cli_args and name in self._cli_args and self._cli_args.__getattribute__(name) is not None:
             value = self._cli_args.__getattribute__(name)
         else:
@@ -94,6 +97,24 @@ class Config():
         except ValueError as value_error:
             print("Error: incompatible value for option '{}'".format(name))
             raise value_error
+
+    def resolve_execution_context(self):
+        execution_context = self.resolve_option('execution_context')
+        if execution_context is None:
+            changes = self.resolve_option(self._changes)
+            if changes is None:
+                execution_context = self._default
+            else:
+                data = read_config_file(changes)
+                execution_context = data.get('context', self._default)
+        return execution_context
+
+    def resolve_changes(self):
+        changes_file = self.resolve_option(self._changes)
+        if changes_file is None:
+            return []
+        data = read_config_file(changes_file)
+        return data.get(self._changes, [])
 
     def resolve_list_option(self, name):
         values = self._file_config.get(name, [])
@@ -109,6 +130,7 @@ class Config():
 
     def log_level_ignored(self, log_level):
         return LOG_LEVEL_MAP[log_level] < LOG_LEVEL_MAP[self.ignore_logs_below]
+
 
 def base_argument_parser(description):
     parser = argparse.ArgumentParser(description=description)
@@ -165,6 +187,7 @@ def base_argument_parser(description):
                              'easily happen if long running tests cross a timezone adjust boundary. '
                              'This option may be used in conjunction with --time-adjust-secs.')
     return parser
+
 
 def configuration(argument_parser):
     if sys.version_info[0] < 3:

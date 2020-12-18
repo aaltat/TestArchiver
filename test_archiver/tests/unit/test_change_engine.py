@@ -39,7 +39,3 @@ def test_change_engine_listener_test_filter_pass_and_fail(listener):
     assert test["name"] == "pytest.test_suite.test_a1"
     test = tests[1]
     assert test["name"] == "pytest.test_suite.test_a2"
-
-
-
-
