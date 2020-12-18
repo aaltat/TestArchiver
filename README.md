@@ -92,6 +92,24 @@ optional arguments:
                         'NAME:VALUE'
   --change-engine-url CHANGE_ENGINE_URL
                         Starts a listener that feeds results to ChangeEngine
+  --execution-context EXECUTION_CONTEXT
+                        To separate data from different build pipelines for ChangeEngine
+                        prioritization. Example if same changes or tests may be used to verify app
+                        in Android and iOS platforms, then it would be good to separate the result
+                        from different builds pipelines/platforms. The ChangeEngine prioritization
+                        might not give correct result if different results from different platforms
+                        are mixed together.
+  --changes CHANGES     Json file which contains information from the changed files for each repo.
+                        The file should be formatted like this: 
+                        {
+	                        "context": "The execution context, same as --execution-context and command line will override this setting.",
+	                        "changes": [{
+                                "name": "string representing the changed item, for example file path",
+                                "repository": "Repository (optional), for separating between changed items with identical names.",
+                                "item_type": "Separating items (optional) and for filtering subsets when prioritising",
+                                "subtype": "(optional, for separating items for filtering subsets when prioritising"
+	                         }]
+                        }
 ```
 
 ## Data model
